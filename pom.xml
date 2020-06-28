@@ -14,5 +14,11 @@
         <artifactId>java-jwt</artifactId>
         <version>3.3.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka_2.11</artifactId>
+        <version>0.9.0.1</version>
+    </dependency>
 </dependencies>
 </project>
