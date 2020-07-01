@@ -4,7 +4,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
-import org.springframework.util.StringUtils;
 
 public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
@@ -37,9 +36,6 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-        if (StringUtils.isEmpty(msg)){
-            return;
-        }
         Channel incoming = ctx.channel();
         for (Channel channel : group) {
             if (channel != incoming){
