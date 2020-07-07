@@ -2,7 +2,6 @@ package lijie.test.kafka;
 
 import com.alibaba.fastjson.JSONObject;
 import lijie.test.threadPoolTest.ThreadPool;
-import org.apache.jute.CsvOutputArchive;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -23,20 +22,25 @@ public class KafkaAsynProducer implements Callable {
     }
 
     public Object call() throws Exception {
-        Person person = new Person();
-        person.setAge("12");
-        person.setName("小s");
-        person.setLike("篮球");
-        person.setPassword("a12345s6");
-        Person person1 = new Person();
-        person1.setAge("12");
-        person1.setName("小s");
-        person1.setLike("篮球");
+        KafkaRequest kafkaRequest = new KafkaRequest();
+        kafkaRequest.setOrgId(1);
+        kafkaRequest.setAccessName("芒果动力");
+        kafkaRequest.setAccessType("api接入");
+        kafkaRequest.setSessionId("1");
+        kafkaRequest.setUniqueId("1234");
+
+
+        KafkaRequest kafkaRequest1 = new KafkaRequest();
+        kafkaRequest1.setOrgId(1);
+        kafkaRequest1.setAccessName("芒果动力");
+        kafkaRequest1.setAccessType("api接入");
+        kafkaRequest1.setSessionId("22");
+        kafkaRequest1.setUniqueId("1234");
         KafkaProducer<String, String> producer = ProducerKafka.getProducer();
         try {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 if (i == 0) {
-                    producer.send(new ProducerRecord("TestTopic", "test", JSONObject.toJSONString(person1)), new Callback() {
+                    producer.send(new ProducerRecord("TestTopic", "test", JSONObject.toJSONString(kafkaRequest1)), new Callback() {
                         public void onCompletion(RecordMetadata metadata, Exception exception) {
                             if (null != exception) {
                                 exception.printStackTrace();
@@ -48,7 +52,7 @@ public class KafkaAsynProducer implements Callable {
                         }
                     });
                 } else {
-                    producer.send(new ProducerRecord("TestTopic", "test", JSONObject.toJSONString(person)), new Callback() {
+                    producer.send(new ProducerRecord("TestTopic", "test", JSONObject.toJSONString(kafkaRequest)), new Callback() {
                         public void onCompletion(RecordMetadata metadata, Exception exception) {
                             if (null != exception) {
                                 exception.printStackTrace();
