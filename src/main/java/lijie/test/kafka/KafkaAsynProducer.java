@@ -24,7 +24,7 @@ public class KafkaAsynProducer implements Callable {
     public Object call() throws Exception {
         KafkaRequest kafkaRequest = new KafkaRequest();
         kafkaRequest.setOrgId(5);
-        kafkaRequest.setAccessName("水果");
+        kafkaRequest.setAccessName("香蕉");
         kafkaRequest.setAccessType("api接入");
         kafkaRequest.setSessionId("1");
         kafkaRequest.setUniqueId("1234");
@@ -40,7 +40,7 @@ public class KafkaAsynProducer implements Callable {
         kafkaRequest1.setType("manual");
         KafkaProducer<String, String> producer = ProducerKafka.getProducer();
         try {
-            for (int i = 1; i < 5000; i++) {
+            for (int i = 1; i < 100; i++) {
                 kafkaRequest.setSessionId(String.valueOf(i));
                 producer.send(new ProducerRecord("TestTopic", "test", JSONObject.toJSONString(kafkaRequest)), new Callback() {
                     public void onCompletion(RecordMetadata metadata, Exception exception) {
