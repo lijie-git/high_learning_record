@@ -11,7 +11,7 @@ public class WaitNotifyTest {
         new Thread(waiter1, "waiter1").start();
 
         Notifier notifier = new Notifier(msg);
-        new Thread(notifier, "notifier").start();
+        new Thread(notifier, "notifier ").start();
 
     }
 }
