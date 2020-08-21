@@ -14,12 +14,13 @@ import java.util.Properties;
  * @author Dongguabai
  * @date 2019/1/17 11:55
  */
-public class KafkaConsumerDemo extends Thread {
+public class KafkaConsumerDemo1 extends Thread {
 
     private final KafkaConsumer<Integer, String> kafkaConsumer;
 
-    public KafkaConsumerDemo(String topic) {
+    public KafkaConsumerDemo1(String topic) {
         //构建相关属性
+        //@see ConsumerConfig
         Properties properties = new Properties();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.1.211:9092");
         //消费组
@@ -78,13 +79,13 @@ public class KafkaConsumerDemo extends Thread {
             ConsumerRecords<Integer, String> consumerRecord = kafkaConsumer.poll(100000000);
             for (ConsumerRecord<Integer, String> record : consumerRecord) {
                 //record.partition() 获取当前分区
-                System.out.println("kafka: "+record.partition() + "】】  message receive 【" + record.value() + "】");
+                System.out.println("kafka1: "+record.partition() + "】】  message receive 【" + record.value() + "】");
             }
         }
     }
 
     public static void main(String[] args) {
-        new KafkaConsumerDemo("test2").start();
+        new KafkaConsumerDemo1("test2").start();
     }
 
 }

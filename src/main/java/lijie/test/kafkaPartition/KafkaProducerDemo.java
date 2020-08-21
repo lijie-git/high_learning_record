@@ -28,7 +28,7 @@ public class KafkaProducerDemo extends Thread {
         //@see ProducerConfig
         Properties properties = new Properties();
         //Kafka 地址
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.220.135:9092,192.168.220.136:9092");
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.1.211:9092");
         //kafka 客户端 Demo
         properties.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaProducerDemo");
         //The number of acknowledgments the producer requires the leader to have received before considering a request complete. This controls the durability of records that are sent.
