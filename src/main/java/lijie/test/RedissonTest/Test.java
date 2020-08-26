@@ -10,7 +10,7 @@ public class Test {
         //执行具体业务逻辑
         Test.xx1();
         //释放锁
-//        DistributedRedisLock.release(key);
+        DistributedRedisLock.release(key);
         //返回结果
     }
 
