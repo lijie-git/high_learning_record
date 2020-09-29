@@ -1,5 +1,6 @@
 package lijie.test.kafkaPartition;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.kafka.clients.producer.*;
 
 import java.util.Properties;
@@ -67,25 +68,24 @@ public class KafkaProducerDemo extends Thread {
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
 
         //指定分区策略
-        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, "lijie.test.kafkaPartition.MyPartitioner");
-
+//        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, "lijie.test.kafkaPartition.MyPartitioner");
         //构建 kafka Producer，这里 key 是 Integer 类型，Value 是 String 类型
         producer = new KafkaProducer<Integer, String>(properties);
         this.topic = topic;
     }
 
     public static void main(String[] args) {
-        new KafkaProducerDemo("test2", true).start();
+        new KafkaProducerDemo("test3", true).start();
     }
 
     @Override
     public void run() {
         int num = 0;
         while (num < 100) {
-            String message = "message--->" + num;
-            System.out.println("start to send message 【 " + message + " 】");
+            UserMessage userMessage = new UserMessage();
+            userMessage.setId(num);
             if (isAsync) {  //如果是异步发送
-                producer.send(new ProducerRecord<Integer, String>(topic, message), new Callback() {
+                producer.send(new ProducerRecord<Integer, String>(topic, JSONObject.toJSONString(userMessage)), new Callback() {
                     @Override
                     public void onCompletion(RecordMetadata metadata, Exception exception) {
                         if (metadata != null) {
@@ -95,7 +95,7 @@ public class KafkaProducerDemo extends Thread {
                 });
             } else {   //同步发送
                 try {
-                    RecordMetadata metadata = producer.send(new ProducerRecord<Integer, String>(topic, message)).get();
+                    RecordMetadata metadata = producer.send(new ProducerRecord<Integer, String>(topic, JSONObject.toJSONString(userMessage))).get();
                     System.out.println("sync-offset：" + metadata.offset() + "-> partition" + metadata.partition());
                 } catch (Exception e) {
                     e.printStackTrace();

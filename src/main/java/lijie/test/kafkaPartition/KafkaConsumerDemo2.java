@@ -1,5 +1,6 @@
 package lijie.test.kafkaPartition;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -41,7 +42,7 @@ public class KafkaConsumerDemo2 extends Thread {
          *  auto.offset.reset= earliest情况下，新的消费者会从该topic最早的消息开始消费
          auto.offset.reset=none情况下，新的消费组加入以后，由于之前不存在 offset，则会直接抛出异常。说白了，新的消费组不要设置这个值
          */
-
+//        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         //enable.auto.commit
         //消费者消费消息以后自动提交，只有当消息提交以后，该消息才不会被再次接收到（如果没有 commit，消息可以重复消费，也没有 offset），还可以配合auto.commit.interval.ms控制自动提交的频率。
         //当然，我们也可以通过consumer.commitSync()的方式实现手动提交
@@ -76,16 +77,18 @@ public class KafkaConsumerDemo2 extends Thread {
     public void run() {
         while (true) {
             //拉取消息
-            ConsumerRecords<Integer, String> consumerRecord = kafkaConsumer.poll(100000000);
+            ConsumerRecords<Integer, String> consumerRecord = kafkaConsumer.poll(1);
             for (ConsumerRecord<Integer, String> record : consumerRecord) {
                 //record.partition() 获取当前分区
                 System.out.println("kafka2: "+record.partition() + "】】  message receive 【" + record.value() + "】");
+
+                System.out.println("转换的消息类型：　"+JSON.parseObject(record.value(), UserMessage.class).toString());
             }
         }
     }
 
     public static void main(String[] args) {
-        new KafkaConsumerDemo2("test2").start();
+        new KafkaConsumerDemo2("test3").start();
     }
 
 }
