@@ -37,6 +37,7 @@ public class DeadLockDemo {
             }
         });
         System.out.println("测试改造");
+        System.out.println("测试改造");
         threadA.start();
         threadB.start();
 
