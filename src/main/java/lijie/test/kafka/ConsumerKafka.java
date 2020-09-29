@@ -15,7 +15,7 @@ public class ConsumerKafka {
 
     }
 
-    private static org.apache.kafka.clients.consumer.KafkaConsumer<String, String> init() {
+    private static org.apache.kafka.clients.consumer.KafkaConsumer<String, String> init(String groudId) {
         Properties properties = new Properties();
         // kafka群组集群地址
         properties.put("bootstrap.servers", "192.168.1.211:9092");
@@ -23,16 +23,16 @@ public class ConsumerKafka {
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
         // 消费群组
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "test1");
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, groudId);
         org.apache.kafka.clients.consumer.KafkaConsumer<String, String> consumer = new org.apache.kafka.clients.consumer.KafkaConsumer(properties);
         return consumer;
     }
 
-    public static org.apache.kafka.clients.consumer.KafkaConsumer<String, String> getProducer() {
+    public static org.apache.kafka.clients.consumer.KafkaConsumer<String, String> getProducer(String groudId) {
         if (consumer == null) {
             synchronized (ConsumerKafka.class) {
                 if (consumer == null) {
-                    consumer = init();
+                    consumer = init(groudId);
                 }
             }
         }

@@ -15,34 +15,29 @@ import java.util.concurrent.Callable;
  * @Date: 2020/3/8 22:37
  * @Description: 异步模式发送kafka消息
  */
-public class KafkaAsynProducer implements Callable {
+public class KafkaAsynProducer1 implements Callable {
 
     public static void main(String[] args) {
-        ThreadPool.submit(new KafkaAsynProducer());
+        ThreadPool.submit(new KafkaAsynProducer1());
     }
 
     public Object call() throws Exception {
         KafkaRequest kafkaRequest = new KafkaRequest();
-        kafkaRequest.setOrgId(5);
-        kafkaRequest.setAccessName("香蕉");
-        kafkaRequest.setAccessType("api接入");
+        kafkaRequest.setOrgId(1);
+
         kafkaRequest.setSessionId("1");
-        kafkaRequest.setUniqueId("1234");
-        kafkaRequest.setType("session");
+
 
 
         KafkaRequest kafkaRequest1 = new KafkaRequest();
         kafkaRequest1.setOrgId(1);
-        kafkaRequest1.setAccessName("水果");
-        kafkaRequest1.setAccessType("api接入");
+
         kafkaRequest1.setSessionId("2222");
-        kafkaRequest1.setUniqueId("1234567812");
-        kafkaRequest1.setType("manual");
         KafkaProducer<String, String> producer = ProducerKafka.getProducer();
         try {
-            for (int i = 1; i < 100; i++) {
-                kafkaRequest.setSessionId(String.valueOf(i));
-                producer.send(new ProducerRecord("TestTopic", "test", JSONObject.toJSONString(kafkaRequest)), new Callback() {
+            for (int i = 60; i < 63; i++) {
+                kafkaRequest1.setSessionId(String.valueOf(i));
+                producer.send(new ProducerRecord("TestTopic1", "test", JSONObject.toJSONString(kafkaRequest1)), new Callback() {
                     public void onCompletion(RecordMetadata metadata, Exception exception) {
                         if (null != exception) {
                             exception.printStackTrace();

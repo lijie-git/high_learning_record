@@ -16,6 +16,16 @@ public class KafkaRequest {
     //用户唯一id
     private String uniqueId;
 
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public int getOrgId() {
         return orgId;
     }

@@ -1,13 +1,10 @@
 package lijie.test.kafka;
 
-import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
 import lijie.test.threadPoolTest.ThreadPool;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 
 import java.util.Collections;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 /**
@@ -16,9 +13,9 @@ import java.util.concurrent.Callable;
  * @Date: 2020/3/7 22:16
  * @Description: 消费者代码，用于验证
  */
-public class KafkaConsumer implements Callable {
+public class KafkaConsumer2 implements Callable {
     public static void main(String[] args) {
-        ThreadPool.submit(new KafkaConsumer());
+        ThreadPool.submit(new KafkaConsumer2());
     }
 
     public Object call() throws Exception {
