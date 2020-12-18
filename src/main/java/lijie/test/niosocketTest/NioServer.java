@@ -49,6 +49,7 @@ public class NioServer {
             SocketChannel sc = ssc.accept();
             sc.configureBlocking(false);
             sc.register(selector, SelectionKey.OP_READ);
+            sc.register(selector, SelectionKey.OP_WRITE);
             System.out.println("accept a client : " + sc.socket().getInetAddress().getHostName());
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,6 +104,8 @@ public class NioServer {
                     ByteBuffer outBuffer = ByteBuffer.wrap(buffer.array());
                     socketChannel.write(outBuffer);// 将消息回送给客户端
                     selectionKey.cancel();
+                }else if (selectionKey.isWritable()){
+                    System.out.println("###################################################################");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
