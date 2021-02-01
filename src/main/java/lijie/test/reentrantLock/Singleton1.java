@@ -39,6 +39,7 @@ class Singleton1 {
         };
         thread1.start();
         thread2.start();
+        new Thread(()-> System.out.println("ssss")).start();
     }
 
 }
